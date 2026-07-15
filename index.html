@@ -211,36 +211,66 @@
         <a href="#" class="btn">Shop Collection</a>
     </section>
 
-    <!-- Products Section -->
     <section id="products-section" class="products-section">
-        <h2>Featured Watches</h2>
-        <div class="product-grid">
-            
-            <!-- Watch 1 -->
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&q=80&w=600" alt="Classic Leather Watch">
-                <h3>Classic Leather</h3>
-                <div class="price">$199.00</div>
-                <a href="#" class="buy-btn" onclick=alert('Watches added to your cart!')">Add to Cart</a>
-            </div>
+    <h2>Featured Watches</h2>
+    
+    <!-- Cart Counter Dashboard -->
+    <div class="cart-summary" style="background: #222; color: #fff; padding: 15px; margin-bottom: 20px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+        <h3>Shopping Cart (<span id="cart-count">0</span> items)</h3>
+        <div><strong>Total: $<span id="cart-total">0.00</span></strong></div>
+    </div>
 
-            <!-- Watch 2 -->
-            <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&q=80&w=600" alt="Chronograph Gold Watch">
-                <h3>Chronograph Gold</h3>
-                <div class="price">$299.00</div>
-                <a href="#" class="buy-btn" onclick="alert('Watches added to your cart!')">Add to Cart</a>
-            </div>
+    <div class="product-grid">
+        <!-- Watch 1 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=500" alt="Classic Leather">
+            <h3>Classic Leather</h3>
+            <div class="price">$199.00</div>
+            <button class="buy-btn" onclick="addToCart('Classic Leather', 199.00)">Add to Cart</button>
+        </div>
 
-    <!-- Watches 3 -->
+        <!-- Watch 2 -->
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=500" alt="Chronograph Gold">
+            <h3>Chronograph Gold</h3>
+            <div class="price">$299.00</div>
+            <button class="buy-btn" onclick="addToCart('Chronograph Gold', 299.00)">Add to Cart</button>
+        </div>
+
+        <!-- Watch 3 -->
         <div class="product-card">
             <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=500" alt="Gold Rolex">
             <h3>Rolex Day-Date Gold</h3>
-            <p>$9,999.00</p>
-            <a href="#" class="buy-btn" onclick="alert('Watch added to your cart!')">Add to Cart</a>
+            <div class="price">$9999.00</div>
+            <button class="buy-btn" onclick="addToCart('Rolex Day-Date Gold', 9999.00)">Add to Cart</button>
         </div>
-    </section>
+    </div>
+</section>
+<footer id="footer-section">
+        <p>&copy; 2026 TimeLux Watches. All Rights Reserved.</p>
+    </footer>
 
+    <script>
+        let cart = [];
+
+        function addToCart(productName, price) {
+            cart.push({ name: productName, price: price });
+            updateCartUI();
+            alert(productName + " has been added to your cart!");
+        }
+
+        function updateCartUI() {
+            let total = 0;
+            for (let i = 0; i < cart.length; i++) {
+                total += cart[i].price;
+            }
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('cart-total').innerText = total.toFixed(2);
+        }
+    </script>
+
+</body>
+</html>
     <footer id="footer-section">
     <footer>
         <p>&copy; 2026 TimeLux Watches. All Rights Reserved.</p>
