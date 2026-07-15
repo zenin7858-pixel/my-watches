@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - TimeLux</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+        }
+
+        /* Navigation Bar */
+        header {
+            background-color: #111111;
+            color: #ffffff;
+            padding: 20px 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d4af37;
+            text-decoration: none;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        /* Cart Container */
+        .cart-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            margin-bottom: 25px;
+            color: #111;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        /* Cart Items List */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-item-info img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .cart-item-details h3 {
+            font-size: 18px;
+            color: #111;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-details p {
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #ff3b30;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .remove-btn:hover {
+            color: #b30000;
+        }
+
+        /* Summary Section */
+        .cart-summary {
+            margin-top: 35px;
+            text-align: right;
+            border-top: 2px solid #eee;
+            padding-top: 25px;
+        }
+
+        .total-price {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #111;
+        }
+
+        .total-price span {
+            color: #d4af37;
+        }
+
+        .checkout-btn {
+            background-color: #d4af37;
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: #111;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #888;
+            padding: 50px 0;
+            font-size: 18px;
+        }
+
+        .shop-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #d4af37;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .shop-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #111;
+            color: #888;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 14px;
+            margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">TimeLux</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+        </nav>
+    </header>
+
+    <div class="cart-container">
+        <h1>Your Shopping Cart</h1>
+        <div id="cart-items-list">
+            </div>
+        
+        <div class="cart-summary" id="summary-section">
+            <div class="total-price">Total Amount: <span id="cart-total-amount">$0.00</span></div>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 TimeLux Watches. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // LocalStorage se data load karna jo shop.html se save hua tha
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function displayCart() {
+            const listContainer = document.getElementById('cart-items-list');
+            const totalElement = document.getElementById('cart-total-amount');
+            const summarySection = document.getElementById('summary-section');
+            
+            listContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="empty-message">
+                        <p>Aapka cart bilkul khali hai!</p>
+                        <a href="shop.html" class="shop-link">Go to Shop Page</a>
+                    </div>
+                `;
+                summarySection.style.display = 'none';
+                return;
+            }
+
+            summarySection.style.display = 'block';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                listContainer.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <img src="${item.image}" alt="${item.name}">
+                            <div class="cart-item-details">
+                                <h3>${item.name}</h3>
+                                <p>$${item.price.toLocaleString()}</p>
+                            </div>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+                    </div>
+                `;
+            });
+
+            totalElement.innerText = '$' + total.toLocaleString();
+        }
+
+        // Cart se kisi product ko delete karne ka function
+        function removeItem(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+        }
+
+        // Checkout function
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Aapka cart khali hai!");
+                return;
+            }
+            alert("Order Successful! Hamari premium watch khareedne ka bohot shukriya.");
+            cart = [];
+            localStorage.removeItem('cart');
+            displayCart();
+        }
+
+        // Page load par displayCart chalayein
+        displayCart();
+    </script>
+</body>
+</html>
