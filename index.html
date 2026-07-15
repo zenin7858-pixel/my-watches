@@ -270,12 +270,60 @@
         }
     </script>
 
-</body>
-</html>
+
     <footer id="footer-section">
     <footer>
         <p>&copy; 2026 TimeLux Watches. All Rights Reserved.</p>
     </footer>
+<!-- Line 270-271 ke aas paas aapka purana script chal raha hoga jo khatam ho raha hai -->
+    </script> 
 
+    <!-- Footer Section -->
+    <footer id="footer-section">
+        <footer>
+            <p>&copy; 2026 TZ Time. All Rights Reserved.</p>
+        </footer>
+    </footer>
+
+    <!-- Firebase Integration (Yahan Paste Karein) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+      import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyA18SPJ0McDIN1Bhke6MVGu3z7Bqu-SMiM",
+        authDomain: "timelux-database.firebaseapp.com",
+        projectId: "timelux-database",
+        storageBucket: "timelux-database.appspot.com",
+        messagingSenderId: "236188949604",
+        appId: "1:236188949604:web:71ab73f084f82232395371",
+        measurementId: "G-9J972RMD1P",
+        databaseURL: "https://timelux-database-default-rtdb.firebaseio.com/"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+      console.log("TZ Time Database Connected! 🔥");
+
+      window.saveCartToFirebase = function(cartItems, customerName = "Guest") {
+        const cartRef = ref(database, 'orders/');
+        const newOrderRef = push(cartRef);
+        
+        set(newOrderRef, {
+          customer: customerName,
+          items: cartItems,
+          timestamp: new Date().toISOString()
+        })
+        .then(() => {
+          console.log("Order saved to TZ Time Database!");
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+        });
+      };
+    </script>
+
+</body>
+</html>
 </body>
 </html>
