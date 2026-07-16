@@ -254,11 +254,17 @@
     <script>
         let cart = [];
 
-        function addToCart(productName, price) {
-            cart.push({ name: productName, price: price });
-            updateCartUI();
-            alert(productName + " has been added to your cart!");
+       function addToCart(productName, price) {
+        let product = { name: productName, price: price };
+        cart.push(product);
+        updateCartUI();
+        alert(productName + " has been added to your cart!");
+        
+        // Firebase mein save karne ke liye ye line add karein:
+        if (window.saveCartToFirebase) {
+            window.saveCartToFirebase(cart);
         }
+    }
 
         function updateCartUI() {
             let total = 0;
