@@ -257,8 +257,18 @@
        function addToCart(productName, price) {
         let product = { name: productName, price: price };
         cart.push(product);
+        
+        // Data browser mein save karein
+        localStorage.setItem('myCart', JSON.stringify(cart));
+        
+        // Firebase par bhejein
+        if (window.saveCartToFirebase) {
+            window.saveCartToFirebase(cart);
+        }
+
         updateCartUI();
         alert(productName + " has been added to your cart!");
+    }
         
         // Firebase mein save karne ke liye ye line add karein:
         if (window.saveCartToFirebase) {
