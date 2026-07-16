@@ -203,7 +203,27 @@
     <footer>
         <p>&copy; 2026 TimeLux Watches. All Rights Reserved.</p>
     </footer>
+<div id="cart-items" style="padding: 20px;">
+    </div>
+<div id="cart-total" style="padding: 20px; font-weight: bold;"></div>
 
+<script>
+    // LocalStorage se data uthayein
+    let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+    let cartContainer = document.getElementById('cart-items');
+    let totalContainer = document.getElementById('cart-total');
+    
+    if (cart.length === 0) {
+        cartContainer.innerHTML = "<p>Aapka cart bilkul khali hai!</p>";
+    } else {
+        let total = 0;
+        cart.forEach(item => {
+            cartContainer.innerHTML += `<p>${item.name} - $${item.price}</p>`;
+            total += item.price;
+        });
+        totalContainer.innerHTML = `Total: $${total}`;
+    }
+</script>
     <script>
         // LocalStorage se data load karna jo shop.html se save hua tha
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
