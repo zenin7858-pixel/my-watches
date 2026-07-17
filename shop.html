@@ -195,3 +195,12 @@
                 <option value="all">All Watches</option>
                 <option value="low">Price: Low to High</option>
                 <option value="high">Price: High to Low
+
+                    <script>
+    function addToCart(productName, price) {
+        let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+        cart.push({ name: productName, price: price });
+        localStorage.setItem('myCart', JSON.stringify(cart));
+        alert(productName + " has been added to your cart!");
+    }
+</script>
