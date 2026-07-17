@@ -195,7 +195,13 @@
                 <option value="all">All Watches</option>
                 <option value="low">Price: Low to High</option>
                 <option value="high">Price: High to Low
-
+<div class="product-list">
+    <div class="product">
+        <h3>Luxury Watch</h3>
+        <p>Price: $100</p>
+        <button onclick="addToCart('Luxury Watch', '100')">Add to Cart</button>
+    </div>
+</div>
                     <script>
     function addToCart(productName, price) {
         let cart = JSON.parse(localStorage.getItem('myCart')) || [];
